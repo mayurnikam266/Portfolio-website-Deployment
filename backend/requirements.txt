@@ -3,8 +3,11 @@ uvicorn[standard]
 pydantic
 sqlalchemy 
 fastapi
-pydantic
 python-dotenv
 SQLAlchemy
 asyncpg
 psycopg2-binary
+pydantic[email]
+
+
+
