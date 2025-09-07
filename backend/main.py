@@ -12,7 +12,7 @@ logging.basicConfig(filename="app.log", level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Initialize FastAPI
-app = FastAPI(title="Jasraj Singh Portfolio API")
+app = FastAPI(title="Mayur Nikam Portfolio API")
 
 # CORS
 origins = ["http://localhost", "http://127.0.0.1"]
@@ -35,13 +35,14 @@ async def get_db():
     async with SessionLocal() as session:
         yield session
 
-# Create tables
-async def init_db():
+# Create tables on startup
+@app.on_event("startup")
+async def on_startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    logging.info("Database initialized successfully")
 
-asyncio.run(init_db())
-
+# Routes
 @app.get("/")
 async def read_root():
     return {"status": "API is running"}
